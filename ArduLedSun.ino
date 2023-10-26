@@ -39,9 +39,9 @@ void setup()
 {
   Serial.begin(9600);
   NeoPixel.begin();
-  Serial.println("Podaj godzine");
-  while(Serial.available() == 0) {}
-  godz = Serial.readString().toInt();
+  //Serial.println("Podaj godzine");
+  //while(Serial.available() == 0) {}
+  godz = 120000;
   offset = gToMs(godz) - millis();
   wlaczone = 0;
 }
@@ -118,6 +118,11 @@ void przyciemniaj(long int odg, long int dog)
 
 void loop()
 {
+  if(Serial.available()!=0)
+  {
+    godz = Serial.readString().toInt();
+    offset = gToMs(godz) - millis();
+  }
   godz = msToG(millis() + offset);
   Serial.println(String(godz));
   //wlaczWszystkie(120010);
